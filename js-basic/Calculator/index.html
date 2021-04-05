@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pocket Calculator</title>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="screen">
+            <div class="previous-operand"></div>
+            <div class="current-operand"></div>
+        </div>
+
+        <div class="keys">
+            <button class="operator-key" data-action="add" value="+">+</button>
+            <button class="operator-key" data-action="subtract" value="-">-</button>
+            <button class="operator-key" data-action="multiply" value="&times;">&times;</button>
+            <button class="operator-key" data-action="divide" value="&divide;">&divide;</button>
+            
+            <button class="digit-key" value="7">7</button>
+            <button class="digit-key" value="8">8</button>
+            <button class="digit-key" value="9">9</button>
+            <button class="clear-key" data-action="clear" value="clear">AC</button>
+            
+            <button class="digit-key" value="4">4</button>
+            <button class="digit-key" value="5">5</button>
+            <button class="digit-key" value="6">6</button>
+            
+            <button class="digit-key" value="1">1</button>
+            <button class="digit-key" value="2">2</button>
+            <button class="digit-key" value="3">3</button>
+            
+            <button class="digit-key" value="0">0</button>
+            <button class="decimal-key"data-action="decimal" value=".">.</button>
+            <button class="del-key" data-action="delete" value="DEL">DEL</button>
+            
+            <button class="equal-sign-key" data-action="calculate" value="=">=</button>       
+        </div>
+    </div>
+
+    <script src="./calculator.js"></script>
+</body>
+</html>
