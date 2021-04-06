@@ -7,15 +7,17 @@ import UserTable from "./tables/userTable"
 function App() {
   const usersData = [
     { id: 1, name: "Tania", userName: "floppydiskette" },
-    { id: 2, name: "Craig", userName: "siliconeidolon" },
-    { id: 3, name: "Ben", userName: "benisphere" },
+    { id: 2, name: "Matt", userName: "benisphere" },
+    { id: 3, name: "Craig", userName: "siliconeidolon" },
+    { id: 4, name: "Ben", userName: "ecematentich" },
+    { id: 5, name: "Warren", userName: "ruipluiteafe" },
   ]
 
   // State settings
   const [isEditing, setIsEditing] = useState(false) // Switch between add and update form
   const initialState = { id: null, name: "", userName: "" }
   const [selectedUser, setSelectedUser] = useState(initialState)
-  const [users, setUsers] = useState(usersData)
+  let [users, setUsers] = useState(usersData)
 
   // Form
   const addUser = (newUser) => {
@@ -33,7 +35,13 @@ function App() {
     setSelectedUser({ id: user.id, name: user.name, userName: user.userName })
   }
   const deleteUser = (id) => {
-    setUsers(users.filter((user, index) => user.id !== id))
+    const deletedId = id
+
+    users = users.filter((user) => user.id !== id)
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].id > deletedId) users[i].id -= 1
+    }
+    setUsers(users)
   }
 
   return (
