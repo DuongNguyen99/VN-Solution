@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import "../styles/styles.css"
+import SearchForm from "./forms/searchForm"
 import AddUserForm from "./forms/addUserForm"
 import UpdateUserForm from "./forms/updateUserForm"
 import UserTable from "./tables/userTable"
@@ -28,6 +29,21 @@ function App() {
     setIsEditing(false)
     setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
   }
+  const searchUser = (option, value) => {
+    option = option.toString() // Convert array to string
+    const usersOption = users.map((user) => user[option])
+    const searchedUsers = usersOption.filter((user) => user.indexOf(value) > -1)
+    const tempUsers = []
+
+    searchedUsers.forEach((searchedUser) => {
+      users.forEach((user) => {
+        if (user[option] === searchedUser) {
+          tempUsers.push(user)
+          setUsers(tempUsers)
+        }
+      })
+    })
+  }
 
   // Table
   const editUser = (user) => {
@@ -53,6 +69,7 @@ function App() {
             <>
               <h2>Update User</h2>
               <UpdateUserForm
+                setIsEditing={setIsEditing}
                 selectedUser={selectedUser} // User needs to be edited
                 updateUser={updateUser} // User after editing
               />
@@ -63,6 +80,13 @@ function App() {
               <AddUserForm addUser={addUser} />
             </>
           )}
+          <SearchForm
+            searchUser={searchUser}
+            cancelSearch={() => {
+              console.log(users)
+              setUsers(users)
+            }}
+          />
         </div>
         <div className="flex-large">
           <h2>Users Table</h2>
