@@ -37,7 +37,12 @@ const UpdateUserForm = (props) => {
       />
       <div className="btn-container">
         <button className="button form-btn">Update</button>
-        <button className="button form-btn muted-button">Cancel</button>
+        <button
+          className="button form-btn muted-button"
+          onClick={() => props.setIsEditing(false)}
+        >
+          Cancel
+        </button>
       </div>
     </form>
   )
