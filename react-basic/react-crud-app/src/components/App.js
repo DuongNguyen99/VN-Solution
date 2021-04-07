@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import "../styles/styles.css"
 import SearchForm from "./forms/searchForm"
-import AddUserForm from "./forms/addUserForm"
-import UpdateUserForm from "./forms/updateUserForm"
+import AddUserForm from "./forms/addForm"
+import UpdateUserForm from "./forms/updateForm"
 import UserTable from "./tables/userTable"
 
 function App() {
@@ -15,12 +15,17 @@ function App() {
   ]
 
   // State settings
-  const [isEditing, setIsEditing] = useState(false) // Switch between add and update form
-  const initialState = { id: null, name: "", userName: "" }
-  const [selectedUser, setSelectedUser] = useState(initialState)
-  let [users, setUsers] = useState(usersData)
+  let [users, setUsers] = useState(usersData) // Initial data
 
-  // Form
+  const [isEditing, setIsEditing] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
+
+  const initialState = { id: null, name: "", userName: "" }
+  const [selectedUser, setSelectedUser] = useState(initialState) // Selected user atfer clicking eidt button
+
+  const [searchedUsers, setSearchedUsers] = useState([])
+
+  // Form function
   const addUser = (newUser) => {
     newUser.id = users.length + 1
     setUsers([...users, newUser])
@@ -30,22 +35,21 @@ function App() {
     setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
   }
   const searchUser = (option, value) => {
-    option = option.toString() // Convert array to string
-    const usersOption = users.map((user) => user[option])
-    const searchedUsers = usersOption.filter((user) => user.indexOf(value) > -1)
-    const tempUsers = []
+    // setIsSearching(true)
+    const optionValue = users.map((user) => user[option.toString()])
+    const matchedUsers = optionValue.filter((user) => user.indexOf(value) > -1)
 
-    searchedUsers.forEach((searchedUser) => {
+    matchedUsers.forEach((matchedUser) => {
       users.forEach((user) => {
-        if (user[option] === searchedUser) {
-          tempUsers.push(user)
-          setUsers(tempUsers)
+        if (user[option.toString()] === matchedUser) {
+          searchedUsers.push(user)
+          setSearchedUsers([...searchedUsers])
         }
       })
     })
   }
 
-  // Table
+  // Table function
   const editUser = (user) => {
     setIsEditing(true)
     setSelectedUser({ id: user.id, name: user.name, userName: user.userName })
@@ -69,9 +73,9 @@ function App() {
             <>
               <h2>Update User</h2>
               <UpdateUserForm
-                setIsEditing={setIsEditing}
                 selectedUser={selectedUser} // User needs to be edited
                 updateUser={updateUser} // User after editing
+                setIsEditing={setIsEditing}
               />
             </>
           ) : (
@@ -80,20 +84,16 @@ function App() {
               <AddUserForm addUser={addUser} />
             </>
           )}
-          <SearchForm
-            searchUser={searchUser}
-            cancelSearch={() => {
-              console.log(users)
-              setUsers(users)
-            }}
-          />
+          <SearchForm searchUser={searchUser} setIsSearching={setIsSearching} />
         </div>
         <div className="flex-large">
           <h2>Users Table</h2>
           <UserTable
             users={users}
+            searchedUsers={searchedUsers}
             editUser={editUser}
             deleteUser={deleteUser}
+            isSearching={isSearching}
           />
         </div>
       </div>
