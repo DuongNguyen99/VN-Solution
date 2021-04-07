@@ -1,30 +1,36 @@
 import React, { useState } from "react"
 
 const SearchForm = (props) => {
-  const [option, setOption] = useState("name")
-  const [searchedValue, setSearchedValue] = useState({})
+  const [selection, setSelection] = useState("name")
+  const [searchedValue, setSearchedValue] = useState({
+    [selection]: "",
+  })
 
   const handleSelectChange = (e) => {
-    const { value } = e.target
-    setOption(value)
+    const option = e.target.options[e.target.selectedIndex].value
+    setSelection(option)
+    setSearchedValue({ [option]: Object.values(searchedValue).toString() }) // Set value of input field to new option
   }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setSearchedValue({ ...searchedValue, [name]: value })
+    setSearchedValue({ [name]: value })
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const option = Object.keys(searchedValue)
-    const inputValue = Object.values(searchedValue)
+
+    const option = Object.keys(searchedValue).toString()
+    const value = Object.values(searchedValue).toString()
+
     if (!searchedValue[option]) return
-    props.searchUser(option, inputValue)
+    props.searchUser(option, value)
     props.setIsSearching(true)
   }
 
   const handleCancel = (e) => {
     e.preventDefault()
+    setSearchedValue({})
     props.setIsSearching(false)
   }
 
@@ -38,10 +44,10 @@ const SearchForm = (props) => {
       <input
         className="form-input"
         type="text"
-        name={option}
+        name={selection}
         onChange={handleInputChange}
       />
-      <button className="button form-btn" type="submit" onClick={handleSubmit}>
+      <button className="button form-btn" onClick={handleSubmit}>
         Search
       </button>
       <button className="button form-btn muted-button" onClick={handleCancel}>
