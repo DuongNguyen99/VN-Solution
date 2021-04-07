@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-const AddUserForm = (props) => {
+const AddForm = (props) => {
   const initialState = { id: null, name: "", userName: "" }
   const [newUser, setNewUser] = useState(initialState)
 
@@ -39,4 +39,4 @@ const AddUserForm = (props) => {
   )
 }
 
-export default AddUserForm
+export default AddForm

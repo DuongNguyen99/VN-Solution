@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 
-const UpdateUserForm = (props) => {
+const UpdateForm = (props) => {
   const [updatedUser, setUpdatedUser] = useState(props.selectedUser) // Get data from edited user
 
   useEffect(() => {
@@ -48,4 +48,4 @@ const UpdateUserForm = (props) => {
   )
 }
 
-export default UpdateUserForm
+export default UpdateForm
