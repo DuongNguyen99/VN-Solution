@@ -1,8 +1,7 @@
 import React, { useState } from "react"
 import "../styles/styles.css"
 import SearchForm from "./forms/searchForm"
-import AddUserForm from "./forms/addForm"
-import UpdateUserForm from "./forms/updateForm"
+import AddUpdateForm from "./forms/add.updateForm"
 import UserTable from "./tables/userTable"
 
 function App() {
@@ -76,21 +75,13 @@ function App() {
       <h1 className="text-center">CRUD App in React</h1>
       <div className="flex-row">
         <div className="flex-large">
-          {isEditing ? (
-            <>
-              <h2>Update User</h2>
-              <UpdateUserForm
-                selectedUser={selectedUser} // User needs to be edited
-                updateUser={updateUser} // User after editing
-                setIsEditing={setIsEditing}
-              />
-            </>
-          ) : (
-            <>
-              <h2>Add User</h2>
-              <AddUserForm addUser={addUser} />
-            </>
-          )}
+          <AddUpdateForm
+            addUser={addUser}
+            selectedUser={selectedUser} // User needs to be edited
+            updateUser={updateUser} // User after editing
+            isEditing={isEditing}
+            setIsEditing={setIsEditing}
+          />
           <SearchForm searchUser={searchUser} setIsSearching={setIsSearching} />
         </div>
         <div className="flex-large">
