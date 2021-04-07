@@ -39,6 +39,7 @@ function App() {
     const optionValue = users.map((user) => user[option.toString()])
     const matchedUsers = optionValue.filter((user) => user.indexOf(value) > -1)
 
+    searchedUsers.length = 0 // Empty an array to avoid pushing duplicated data
     matchedUsers.forEach((matchedUser) => {
       users.forEach((user) => {
         if (user[option.toString()] === matchedUser) {
