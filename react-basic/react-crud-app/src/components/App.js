@@ -14,35 +14,39 @@ function App() {
     { id: 5, name: "Warren", userName: "ruipluiteafe" },
   ]
 
-  // State settings
+  //* State settings
   let [users, setUsers] = useState(usersData) // Initial data
 
   const [isEditing, setIsEditing] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
 
   const initialState = { id: null, name: "", userName: "" }
-  const [selectedUser, setSelectedUser] = useState(initialState) // Selected user atfer clicking eidt button
+  const [selectedUser, setSelectedUser] = useState(initialState) // Selected user atfer clicking edit button
 
   const [searchedUsers, setSearchedUsers] = useState([])
 
-  // Form function
+  //* Form functions
+  // Add function
   const addUser = (newUser) => {
     newUser.id = users.length + 1
     setUsers([...users, newUser])
   }
+  // Update function
   const updateUser = (id, updatedUser) => {
     setIsEditing(false)
     setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
   }
+  // Search function
   const searchUser = (option, value) => {
-    // setIsSearching(true)
-    const optionValue = users.map((user) => user[option.toString()])
+    if (!option) return
+
+    const optionValue = users.map((user) => user[option])
     const matchedUsers = optionValue.filter((user) => user.indexOf(value) > -1)
 
     searchedUsers.length = 0 // Empty an array to avoid pushing duplicated data
     matchedUsers.forEach((matchedUser) => {
       users.forEach((user) => {
-        if (user[option.toString()] === matchedUser) {
+        if (user[option] === matchedUser) {
           searchedUsers.push(user)
           setSearchedUsers([...searchedUsers])
         }
@@ -50,11 +54,13 @@ function App() {
     })
   }
 
-  // Table function
+  //* Table functions
+  // Edit function
   const editUser = (user) => {
     setIsEditing(true)
     setSelectedUser({ id: user.id, name: user.name, userName: user.userName })
   }
+  // Delete function
   const deleteUser = (id) => {
     const deletedId = id
 
