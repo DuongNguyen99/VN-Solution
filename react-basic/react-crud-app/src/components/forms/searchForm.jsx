@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import styles from "../../styles/form.module.css"
 
 const SearchForm = (props) => {
   const [selection, setSelection] = useState("name")
@@ -35,22 +36,31 @@ const SearchForm = (props) => {
   }
 
   return (
-    <form className="search-form">
+    <form className={styles["search-form"]}>
       <h2>Search Name/Username</h2>
-      <select className="search-selector" onChange={handleSelectChange}>
+      <select
+        className={styles["search-selector"]}
+        onChange={handleSelectChange}
+      >
         <option value="name">Name</option>
         <option value="userName">Username</option>
       </select>
       <input
-        className="form-input"
+        className={styles["form-input"]}
         type="text"
         name={selection}
         onChange={handleInputChange}
       />
-      <button className="button form-btn" onClick={handleSubmit}>
+      <button
+        className={`${styles.button} ${styles["form-btn"]}`}
+        onClick={handleSubmit}
+      >
         Search
       </button>
-      <button className="button form-btn muted-button" onClick={handleCancel}>
+      <button
+        className={`${styles.button} ${styles["form-btn"]} ${styles["muted-button"]}`}
+        onClick={handleCancel}
+      >
         Cancel
       </button>
     </form>

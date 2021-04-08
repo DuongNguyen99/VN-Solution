@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import styles from "../../styles/form.module.css"
 
 const AddUpdateForm = (props) => {
   const initialState = { id: null, name: "", userName: "" }
@@ -38,27 +39,29 @@ const AddUpdateForm = (props) => {
         <>
           {/* //*Update form */}
           <h2>Update User</h2>
-          <form onSubmit={handleUpdateSubmit} className="update-form">
+          <form onSubmit={handleUpdateSubmit}>
             <label>Name</label>
             <input
-              className="form-input"
+              className={styles["form-input"]}
               type="text"
               name="name"
               value={updatedUser.name}
               onChange={handleInputChange}
             />
-            <label>Username</label>
+            <label className={styles.red}>Username</label>
             <input
-              className="form-input"
+              className={styles["form-input"]}
               type="text"
               name="userName"
               value={updatedUser.userName}
               onChange={handleInputChange}
             />
             <div className="btn-container">
-              <button className="button form-btn">Update</button>
+              <button className={(styles.button, styles["form-btn"])}>
+                Update
+              </button>
               <button
-                className="button form-btn muted-button"
+                className={`${styles.button} ${styles["form-btn"]} ${styles["muted-button"]}`}
                 onClick={() => props.setIsEditing(false)}
               >
                 Cancel
@@ -70,10 +73,10 @@ const AddUpdateForm = (props) => {
         <>
           {/* //*Add form */}
           <h2>Add User</h2>
-          <form onSubmit={handleAddSubmit} className="add-form">
+          <form onSubmit={handleAddSubmit}>
             <label>Name</label>
             <input
-              className="form-input"
+              className={styles["form-input"]}
               type="text"
               name="name"
               value={newUser.name}
@@ -81,13 +84,15 @@ const AddUpdateForm = (props) => {
             />
             <label>Username</label>
             <input
-              className="form-input"
+              className={styles["form-input"]}
               type="text"
               name="userName"
               value={newUser.userName}
               onChange={handleInputChange}
             />
-            <button className="button form-btn">Create</button>
+            <button className={`${styles.button} ${styles["form-btn"]}`}>
+              Create
+            </button>
           </form>
         </>
       )}

@@ -1,4 +1,6 @@
 import React from "react"
+import styles from "../../styles/table.module.css"
+console.log(styles)
 
 const UserTable = (props) => {
   return (
@@ -21,13 +23,13 @@ const UserTable = (props) => {
                 <td>{user.userName}</td>
                 <td>
                   <button
-                    className="button table-btn muted-button"
+                    className={`${styles.button} ${styles["table-btn"]} ${styles["muted-button"]}`}
                     onClick={() => props.editUser(user)}
                   >
                     Edit
                   </button>
                   <button
-                    className="button table-btn muted-button"
+                    className={`${styles.button} ${styles["table-btn"]} ${styles["muted-button"]}`}
                     onClick={() => props.deleteUser(user.id)}
                   >
                     Delete

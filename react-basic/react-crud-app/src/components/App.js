@@ -1,7 +1,8 @@
 import React, { useState } from "react"
-import "../styles/styles.css"
+import "../styles/app.css"
+// import styles from "../styles/app.module.css"
 import SearchForm from "./forms/searchForm"
-import AddUpdateForm from "./forms/add.updateForm"
+import AddUpdateForm from "./forms/addUpdateForm"
 import UserTable from "./tables/userTable"
 
 function App() {
