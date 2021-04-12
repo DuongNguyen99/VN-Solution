@@ -1,6 +1,5 @@
 import React from "react"
 import styles from "../../styles/table.module.css"
-console.log(styles)
 
 const UserTable = (props) => {
   return (
