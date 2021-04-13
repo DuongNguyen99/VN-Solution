@@ -57,9 +57,7 @@ const AddUpdateForm = (props) => {
               onChange={handleInputChange}
             />
             <div className="btn-container">
-              <button className={(styles.button, styles["form-btn"])}>
-                Update
-              </button>
+              <button className={(styles.button, styles["form-btn"])}>Update</button>
               <button
                 className={`${styles.button} ${styles["form-btn"]} ${styles["muted-button"]}`}
                 onClick={() => props.setIsEditing(false)}
@@ -90,9 +88,7 @@ const AddUpdateForm = (props) => {
               value={newUser.userName}
               onChange={handleInputChange}
             />
-            <button className={`${styles.button} ${styles["form-btn"]}`}>
-              Create
-            </button>
+            <button className={`${styles.button} ${styles["form-btn"]}`}>Create</button>
           </form>
         </>
       )}

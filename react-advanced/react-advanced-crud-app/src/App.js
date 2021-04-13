@@ -1,9 +1,8 @@
 import React, { useState } from "react"
-// import cx from "classnames"
-
 import AddUpdateForm from "./components/Forms/AddUpdateForm/AddUpdateForm"
 import SearchForm from "./components/Forms/SearchForm/SearchForm"
 import UserTable from "./components/Table/UserTable"
+
 import styles from "./App.module.css"
 
 const App = () => {
@@ -17,7 +16,9 @@ const App = () => {
 
   //* State settings
   let [users, setUsers] = useState(usersData) // Initial data
-  const [selectedUser, setSelectedUser] = useState({ id: null, name: "", userName: "" }) // Selected user atfer clicking edit button
+
+  const initialState = { id: null, name: "", userName: "" }
+  const [selectedUser, setSelectedUser] = useState(initialState) // Selected user atfer clicking edit button
 
   // Create options for select box
   const fields = Object.keys(usersData[0]).slice(1)
@@ -34,22 +35,21 @@ const App = () => {
     newUser.id = users.length + 1
     setUsers([...users, newUser])
   }
+  const updateUser = (id, updatedUser) => {
+    setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
+  }
 
   //* Table function
   const editUser = (user) => {
-    console.log(user)
-    console.log(selectedUser)
     setSelectedUser({ id: user.id, name: user.name, userName: user.userName })
-    console.log(selectedUser)
   }
+
   const deleteUser = (id) => {
-    const deletedId = id
-    // Auto-decrease id
-    users = users.filter((user) => user.id !== id)
+    setUsers(users.filter((user) => user.id !== id))
+    // Auto-decrease ID after deleting user
     for (let i = 0; i < users.length; i++) {
-      if (users[i].id > deletedId) users[i].id -= 1
+      if (users[i].id > id) users[i].id -= 1
     }
-    setUsers(users)
   }
 
   return (
@@ -57,7 +57,7 @@ const App = () => {
       <h1 className={styles["text-center"]}>CRUD App with Rsuite and RFF</h1>
       <div className={styles["flex-row"]}>
         <div className={styles["flex-form"]}>
-          <AddUpdateForm selectedUser={selectedUser} onCreate={createUser} />
+          <AddUpdateForm selectedUser={selectedUser} onCreate={createUser} onUpdate={updateUser} />
           <SearchForm options={options} />
         </div>
         <div className={styles["flex-table"]}>

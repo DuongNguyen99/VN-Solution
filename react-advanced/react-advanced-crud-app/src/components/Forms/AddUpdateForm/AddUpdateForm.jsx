@@ -6,67 +6,76 @@ import "rsuite/dist/styles/rsuite-default.css"
 import styles from "./AddUpdateForm.module.css"
 
 const AddUpdateForm = (props) => {
+  const initialState = { id: null, name: "", userName: "" }
   const [editingUser, setEditingUser] = useState(props.selectedUser)
 
-  // useEffect(() => {
-  //   setEditingUser(props.selectedUser)
-  // }, [props])
+  useEffect(() => {
+    setEditingUser(props.selectedUser)
+  }, [props.selectedUser])
 
   const onCreateSubmit = (values, form) => {
-    if (!values.name || !values.userName) return
     props.onCreate(values)
     form.reset()
   }
-  const onUpdateSubmit = (values) => {}
+
+  const onUpdateSubmit = (values, form) => {
+    props.onUpdate(values.id, values)
+    setEditingUser(initialState)
+  }
 
   return (
     <>
-      {/*//? Update form */}
+      {/*//* ========= Update form ========= */}
       <h2>Update User</h2>
       <Form
         onSubmit={onUpdateSubmit}
-        render={({ handleSubmit, form, values }) => (
-          <form onSubmit={handleSubmit}>
-            {/* Name input field */}
-            <Field name="name">
-              {({ input }) => (
-                <div>
-                  <label htmlFor="name">Name</label>
-                  <input {...input} className={styles["form-input"]} type="text" />
-                </div>
-              )}
-            </Field>
-            {/* Username input field */}
-            <Field name="userName">
-              {({ input }) => (
-                <div>
-                  <label htmlFor="userName">Username</label>
-                  <input {...input} className={styles["form-input"]} type="text" />
-                </div>
-              )}
-            </Field>
-            <ButtonToolbar>
-              <Button type="submit" appearance="primary" size="lg" className={styles["form-btn"]}>
-                Update
-              </Button>
-              <Button
-                type="button"
-                appearance="ghost"
-                size="lg"
-                className={styles["form-btn"]}
-                onClick={form.reset}
-              >
-                Cancel
-              </Button>
-            </ButtonToolbar>
-          </form>
-        )}
+        initialValues={editingUser}
+        render={({ handleSubmit }) => {
+          return (
+            <form onSubmit={handleSubmit}>
+              <Field name="name">
+                {({ input }) => {
+                  return (
+                    <div>
+                      <label htmlFor="name">Name</label>
+                      <input {...input} className={styles["form-input"]} type="text" />
+                    </div>
+                  )
+                }}
+              </Field>
+              <Field name="userName">
+                {({ input }) => (
+                  <div>
+                    <label htmlFor="userName">Username</label>
+                    <input {...input} className={styles["form-input"]} type="text" />
+                  </div>
+                )}
+              </Field>
+              <ButtonToolbar>
+                <Button appearance="primary" size="lg" type="submit">
+                  Update
+                </Button>
+                <Button
+                  appearance="ghost"
+                  size="lg"
+                  type="button"
+                  onClick={() => setEditingUser(initialState)}
+                >
+                  Cancel
+                </Button>
+              </ButtonToolbar>
+              {/* <pre>{JSON.stringify(props.values, 0, 2)}</pre> */}
+            </form>
+          )
+        }}
       ></Form>
-      {/*//? Create form */}
+
+      {/*//* ========= Create form ========= */}
       <h2>Create User</h2>
       <Form
         onSubmit={onCreateSubmit}
-        render={({ handleSubmit, form, values }) => (
+        initialValues={initialState}
+        render={({ handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             {/* Name input field */}
             <Field name="name">
@@ -89,6 +98,7 @@ const AddUpdateForm = (props) => {
             <Button type="submit" appearance="primary" size="lg">
               Create
             </Button>
+            {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
           </form>
         )}
       ></Form>
