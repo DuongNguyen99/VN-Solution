@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import AddUpdateForm from "./components/Forms/AddUpdateForm/AddUpdateForm"
+import CreateUpdateForm from "./components/Forms/CreateUpdateForm/CreateUpdateForm"
 import SearchForm from "./components/Forms/SearchForm/SearchForm"
 import UserTable from "./components/Table/UserTable"
 
@@ -14,11 +14,13 @@ const App = () => {
     { id: 5, name: "Warren", userName: "ruipluiteafe" },
   ]
 
-  //* State settings
-  let [users, setUsers] = useState(usersData) // Initial data
-
+  // User state
   const initialState = { id: null, name: "", userName: "" }
+  const [users, setUsers] = useState(usersData) // Initial data
   const [selectedUser, setSelectedUser] = useState(initialState) // Selected user atfer clicking edit button
+
+  // Flag state
+  const [isEditing, setIsEditing] = useState(false)
 
   // Create options for select box
   const fields = Object.keys(usersData[0]).slice(1)
@@ -30,17 +32,19 @@ const App = () => {
     value: capitalize(field),
   }))
 
-  //* Form function
+  // ========= Form function ========= //
   const createUser = (newUser) => {
     newUser.id = users.length + 1
     setUsers([...users, newUser])
   }
   const updateUser = (id, updatedUser) => {
+    setIsEditing(false)
     setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
   }
 
-  //* Table function
+  // ========= Table function ========= //
   const editUser = (user) => {
+    setIsEditing(true)
     setSelectedUser({ id: user.id, name: user.name, userName: user.userName })
   }
 
@@ -57,7 +61,12 @@ const App = () => {
       <h1 className={styles["text-center"]}>CRUD App with Rsuite and RFF</h1>
       <div className={styles["flex-row"]}>
         <div className={styles["flex-form"]}>
-          <AddUpdateForm selectedUser={selectedUser} onCreate={createUser} onUpdate={updateUser} />
+          <CreateUpdateForm
+            selectedUser={selectedUser}
+            isEditing={isEditing}
+            onCreate={createUser}
+            onUpdate={updateUser}
+          />
           <SearchForm options={options} />
         </div>
         <div className={styles["flex-table"]}>
