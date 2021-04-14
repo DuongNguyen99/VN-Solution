@@ -40,7 +40,11 @@ const App = () => {
     setUsers([...users, newUser])
   }
   const updateUser = (id, updatedUser) => {
-    setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
+    if (isSearching) {
+      setSearchedUsers(users.map((user) => (user.id === id ? updatedUser : user)))
+    } else {
+      setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
+    }
   }
   const searchUser = (user) => {
     const option = Object.keys(user).toString()
