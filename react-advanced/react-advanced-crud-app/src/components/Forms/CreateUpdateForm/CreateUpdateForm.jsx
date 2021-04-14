@@ -3,7 +3,7 @@ import CreateForm from "./CreateForm/CreateForm"
 import UpdateForm from "./UpdateForm/UpdateForm"
 
 const CreateUpdateForm = (props) => {
-  const initialState = { id: null, name: "", userName: "" }
+  const initialState = { id: null, name: "", username: "" }
   const [editingUser, setEditingUser] = useState(props.selectedUser)
 
   useEffect(() => {
@@ -15,6 +15,11 @@ const CreateUpdateForm = (props) => {
   }
   const onUpdateSubmit = (values) => {
     props.onUpdate(values.id, values)
+    props.setIsEditing(false)
+    setEditingUser(initialState)
+  }
+  const onCancel = () => {
+    props.setIsEditing(false)
     setEditingUser(initialState)
   }
 
@@ -25,6 +30,7 @@ const CreateUpdateForm = (props) => {
       ) : (
         <UpdateForm
           onSubmit={onUpdateSubmit}
+          onCancel={onCancel}
           editingUser={editingUser}
           setEditingUser={setEditingUser}
         />
