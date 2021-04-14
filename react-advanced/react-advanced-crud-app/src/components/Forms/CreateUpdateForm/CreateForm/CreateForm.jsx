@@ -9,14 +9,14 @@ const FormValidation = (values) => {
   if (!values.name) {
     errors.name = "Name is required"
   }
-  if (!values.userName) {
-    errors.userName = "Username is required"
+  if (!values.username) {
+    errors.username = "Username is required"
   }
   return errors
 }
 
 const CreateForm = (props) => {
-  const initialState = { id: null, name: "", userName: "" }
+  const initialState = { id: null, name: "", username: "" }
   return (
     <div>
       <h2>Create User</h2>
@@ -35,10 +35,10 @@ const CreateForm = (props) => {
                 </div>
               )}
             </Field>
-            <Field name="userName">
+            <Field name="username">
               {({ input, meta }) => (
                 <div style={{ marginBottom: "1rem" }}>
-                  <label htmlFor="userName">Username</label>
+                  <label htmlFor="username">Username</label>
                   <input {...input} className={styles["form-input"]} type="text" />
                   {meta.error && meta.touched && <span className={styles.error}>{meta.error}</span>}
                 </div>
