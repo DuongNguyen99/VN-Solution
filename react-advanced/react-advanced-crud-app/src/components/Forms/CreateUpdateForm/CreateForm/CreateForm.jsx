@@ -49,7 +49,7 @@ const CreateForm = (props) => {
                 Create
               </Button>
               <Button appearance="ghost" size="lg" type="button" onClick={form.reset}>
-                Reset
+                Cancel
               </Button>
             </ButtonToolbar>
           </form>
