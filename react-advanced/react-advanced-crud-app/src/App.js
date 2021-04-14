@@ -25,7 +25,7 @@ const App = () => {
   const [isSearching, setIsSearching] = useState(false)
 
   // Create options for select box
-  const fields = Object.keys(users[0]).slice(1)
+  const fields = Object.keys(usersData[0]).slice(1)
   const capitalize = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
   }
