@@ -7,23 +7,25 @@ import styles from "./App.module.css"
 
 const App = () => {
   const usersData = [
-    { id: 1, name: "Tania", userName: "floppydiskette" },
-    { id: 2, name: "Matt", userName: "benisphere" },
-    { id: 3, name: "Craig", userName: "siliconeidolon" },
-    { id: 4, name: "Ben", userName: "ecematentich" },
-    { id: 5, name: "Warren", userName: "ruipluiteafe" },
+    { id: 1, name: "Tania", username: "floppydiskette" },
+    { id: 2, name: "Matt", username: "benisphere" },
+    { id: 3, name: "Craig", username: "siliconeidolon" },
+    { id: 4, name: "Ben", username: "ecematentich" },
+    { id: 5, name: "Warren", username: "ruipluiteafe" },
   ]
 
   // User state
-  const initialState = { id: null, name: "", userName: "" }
+  const initialState = { id: null, name: "", username: "" }
   const [users, setUsers] = useState(usersData) // Initial data
   const [selectedUser, setSelectedUser] = useState(initialState) // Selected user atfer clicking edit button
+  const [searchedUsers, setSearchedUsers] = useState([])
 
   // Flag state
   const [isEditing, setIsEditing] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
 
   // Create options for select box
-  const fields = Object.keys(usersData[0]).slice(1)
+  const fields = Object.keys(users[0]).slice(1)
   const capitalize = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
   }
@@ -32,20 +34,31 @@ const App = () => {
     value: capitalize(field),
   }))
 
-  // ========= Form function ========= //
+  //! ========= Form function ========= //
   const createUser = (newUser) => {
     newUser.id = users.length + 1
     setUsers([...users, newUser])
   }
   const updateUser = (id, updatedUser) => {
-    setIsEditing(false)
     setUsers(users.map((user) => (user.id === id ? updatedUser : user)))
   }
+  const searchUser = (user) => {
+    const option = Object.keys(user).toString()
+    const value = Object.values(user).toString()
 
-  // ========= Table function ========= //
+    searchedUsers.length = 0 // Empty an array to avoid pushing previous data
+    // eslint-disable-next-line array-callback-return
+    users.map((user) => {
+      if (user[option.toLowerCase()].includes(value)) {
+        searchedUsers.push(user)
+        setSearchedUsers([...searchedUsers])
+      }
+    })
+  }
+
+  //! ========= Table function ========= //
   const editUser = (user) => {
-    setIsEditing(true)
-    setSelectedUser({ id: user.id, name: user.name, userName: user.userName })
+    setSelectedUser({ id: user.id, name: user.name, username: user.username })
   }
 
   const deleteUser = (id) => {
@@ -64,14 +77,22 @@ const App = () => {
           <CreateUpdateForm
             selectedUser={selectedUser}
             isEditing={isEditing}
+            setIsEditing={setIsEditing}
             onCreate={createUser}
             onUpdate={updateUser}
           />
-          <SearchForm options={options} />
+          <SearchForm options={options} setIsSearching={setIsSearching} onSearch={searchUser} />
         </div>
         <div className={styles["flex-table"]}>
           <h2>Users Table</h2>
-          <UserTable users={users} onEdit={editUser} onDelete={deleteUser} />
+          <UserTable
+            users={users}
+            searchedUsers={searchedUsers}
+            isSearching={isSearching}
+            setIsEditing={setIsEditing}
+            onEdit={editUser}
+            onDelete={deleteUser}
+          />
         </div>
       </div>
     </div>
