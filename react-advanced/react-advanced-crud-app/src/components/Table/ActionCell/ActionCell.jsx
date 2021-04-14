@@ -10,7 +10,14 @@ const ActionCell = (props) => {
   return (
     <Cell {...props} style={{ padding: "0 10px" }}>
       <ButtonToolbar>
-        <Button size="md" appearance="primary" onClick={() => props.onEdit(props.rowData)}>
+        <Button
+          size="md"
+          appearance="primary"
+          onClick={() => {
+            props.setIsEditing(true)
+            props.onEdit(props.rowData)
+          }}
+        >
           Edit
         </Button>
         <Button size="md" appearance="ghost" onClick={() => props.onDelete(props.rowData.id)}>
