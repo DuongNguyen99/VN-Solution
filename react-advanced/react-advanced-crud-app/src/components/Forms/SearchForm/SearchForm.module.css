@@ -44,3 +44,7 @@ label {
   height: 1px;
   width: 90%;
 }
+
+.hidden {
+  display: none;
+}
