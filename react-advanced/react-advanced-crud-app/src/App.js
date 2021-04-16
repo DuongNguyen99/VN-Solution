@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import CreateUpdateForm from "./components/Forms/CreateUpdateForm/CreateUpdateForm"
+import UserForm from "./components/Forms/UserForm/UserForm"
 import SearchForm from "./components/Forms/SearchForm/SearchForm"
 import UserTable from "./components/Table/UserTable"
 
@@ -34,7 +34,7 @@ const App = () => {
     value: capitalize(field),
   }))
 
-  //! ========= Form function ========= //
+  // ========= Form function ========= //
   const createUser = (newUser) => {
     newUser.id = users.length + 1
     setUsers([...users, newUser])
@@ -60,7 +60,7 @@ const App = () => {
     })
   }
 
-  //! ========= Table function ========= //
+  // ========= Table function ========= //
   const editUser = (user) => {
     setSelectedUser({ id: user.id, name: user.name, username: user.username })
   }
@@ -78,7 +78,7 @@ const App = () => {
       <h1 className={styles["text-center"]}>CRUD App with Rsuite and RFF</h1>
       <div className={styles["flex-row"]}>
         <div className={styles["flex-form"]}>
-          <CreateUpdateForm
+          <UserForm
             selectedUser={selectedUser}
             isEditing={isEditing}
             setIsEditing={setIsEditing}
